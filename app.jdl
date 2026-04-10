@@ -4,62 +4,36 @@ application {
     packageName com.protasknubyyy
     applicationType monolith
     authenticationType jwt
-    databaseType sql
-    prodDatabaseType postgresql
-    devDatabaseType h2Disk
-    enableTranslation Boolean
-    nativeLanguage fr
-    languages [fr, en],
     buildTool maven
     clientFramework angular
+    databaseType sql
+    devDatabaseType h2Disk
+    prodDatabaseType postgresql
     serverPort 9000
-    jhiPrefix jhi
   }
   entities *
 }
 
-enum Priority {
-  LOW
-  MEDIUM
-  HIGH
-  URGENT
-}
-
-enum Status {
-  TODO
-  IN_PROGRESS
-  DONE
-  BLOCKED
+entity Project {
+  name String required
+  description TextBlob
+  startDate LocalDate
+  dueDate LocalDate
 }
 
 entity Task {
   title String required
-  description String
-  priority Priority required
-  status Status required
+  description TextBlob
+  status String
+  priority Integer
   dueDate LocalDate
-  createdAt Instant required
-}
-
-entity Category {
-  name String required
-  color String
-  icon String
-}
-
-entity Comment {
-  content TextBlob required
-  createdAt Instant required
+  completedAt Instant
 }
 
 relationship ManyToOne {
-  Task{assignee(login)} to User with builtInEntity
-  Task{category} to Category
-  Comment{task} to Task
-  Comment{author(login)} to User with builtInEntity
+  Task{project} to Project
 }
 
 dto * with mapstruct
 service * with serviceImpl
-paginate * with pagination
-filter *
+paginate Task with pagination

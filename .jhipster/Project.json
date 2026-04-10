@@ -1,0 +1,30 @@
+{
+  "annotations": {
+    "changelogDate": "20260410190701"
+  },
+  "applications": ["protasknubyyy"],
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "TextBlob"
+    },
+    {
+      "fieldName": "startDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dueDate",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "name": "Project",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}
