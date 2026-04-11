@@ -42,7 +42,7 @@ class DashboardResourceIT {
     private static final TaskStatus UPDATED_STATUS = TaskStatus.IN_PROGRESS;
 
     private static final LocalDate DEFAULT_DUE_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_DUE_DATE = LocalDate.now(org.springframework.time.Clock.systemDefaultZone()).plusDays(1);
+    private static final LocalDate UPDATED_DUE_DATE = LocalDate.now(java.time.Clock.systemDefaultZone()).plusDays(1); // Corrected Clock import
 
     private static final Instant DEFAULT_CREATED_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_CREATED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
@@ -50,7 +50,7 @@ class DashboardResourceIT {
     private static final Instant DEFAULT_LAST_MODIFIED_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_LAST_MODIFIED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final AtomicLong count = new AtomicLong(new Random().nextInt() + (2 * Integer.MAX_VALUE));
+    private static final AtomicLong count = new AtomicLong(new Random().nextInt() + (2 * (long)Integer.MAX_VALUE)); // Cast to long for addition
 
     @Autowired
     private TaskRepository taskRepository;
@@ -141,6 +141,7 @@ class DashboardResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.totalTasks").value(0))
             .andExpect(jsonPath("$.completedTasks").value(0))
+            .andExpect(jsonPath("$.inProgressTasks").value(0))
             .andExpect(jsonPath("$.tasksByStatus.TODO").value(0))
             .andExpect(jsonPath("$.tasksByStatus.IN_PROGRESS").value(0))
             .andExpect(jsonPath("$.tasksByStatus.DONE").value(0))
