@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * REST controller for managing dashboard data.
@@ -29,6 +30,7 @@ public class DashboardResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the dashboardDataDTO.
      */
     @GetMapping("/dashboard")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<DashboardDataDTO> getDashboardData() {
         log.debug("REST request to get DashboardData");
         DashboardDataDTO dashboardData = dashboardService.getDashboardData();
